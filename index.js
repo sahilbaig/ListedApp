@@ -212,5 +212,8 @@ async function run(auth) {
         
   } )
 }
+const interval = Math.floor((Math.random() * 120000) + 60000);
 
-authorize().then(run).catch(console.error)
+setInterval(function(){
+  authorize().then(run).catch(console.error)
+}, interval)
