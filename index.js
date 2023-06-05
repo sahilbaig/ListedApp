@@ -106,7 +106,6 @@ async function addLabel(id , auth){
 
     let lableId = await checkLabelExists("Listed-Test-Label" , auth)
 
-    
     if(!lableId){
         const createLabel = await gmail.users.labels.create({
             userId: 'me',
@@ -125,6 +124,8 @@ async function addLabel(id , auth){
             addLabelIds: [lableId],
         },
     });
+
+    return response
   
 }
 function createRawMessage(emailMessage) {
@@ -176,7 +177,6 @@ async function replied (messages) {
     messages.forEach((message) => {
         if(message.labelIds.includes('SENT')){
             flag=true
-           
         }
         
     })
@@ -212,8 +212,25 @@ async function run(auth) {
         
   } )
 }
-const interval = Math.floor((Math.random() * 120000) + 60000);
 
-setInterval(function(){
+const interval = Math.floor((Math.random() * 120000) + 60000);
+const test = true
+
+
+if(test){
   authorize().then(run).catch(console.error)
-}, interval)
+}
+else{
+  setInterval(function(){
+    authorize().then(run).catch(console.error)
+  }, interval)  
+}
+
+
+
+// 1. Implement login with google. 
+// 2. Isolate emails with no prior reply 
+// 3. Reply to that email 
+// 4. Tag the email  
+// 5. Create tag if not created 
+// 6 .Repeat the sequence in random intervals of 60-120 seconds. 
